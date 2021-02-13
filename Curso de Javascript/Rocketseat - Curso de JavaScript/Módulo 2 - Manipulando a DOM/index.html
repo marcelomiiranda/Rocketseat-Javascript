@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+    <head>
+        <title>Curso de Java</title>
+    </head>
+    <body>
+        <div id="app"> 
+            <table>
+                <tr>
+                    <td><input type="text" id="mensagem" /></td>
+                </tr>
+                <tr>
+                    <td><button class="botao">Confirmar</button></td>
+                </tr>
+                <tr>
+                    <td>Valor inicial:<input type="number" id="x" value="" /></td>
+                </tr>
+                <tr>
+                    <td>Valor final:<input type="number" id="y" value="" /></td>
+                </tr>
+                <tr>
+                    <td><button class="pares">Números Pares</button></td>
+                </tr>
+                <tr>
+                    <td><button class="habilidade">Verifica Habilidade</button></td>
+                </tr>
+                <tr>
+                    <td>Anos de estudo:<input type="number" id="anosEstudo" value="" /></td>
+                </tr>
+                <tr>
+                    <td><button class="experiencia">Verifica Experiência</button></td>
+                </tr>
+                <tr>
+                    <td><button class="habilidades">Verifica Habilidades</button></td>
+                </tr>
+                <tr>
+                    <td><button class="criarElemento">Criar Elemento</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="nomes" ><br>
+                        <button class="adicionar">Adicionar</button>
+                    </td>
+                </tr>
+            </table>   
+        </div>
+
+        <script>
+            var endereco = {
+                rua: "Rua Heliotrópios",
+                numero: 222,
+                bairro: "Jardim Motorama",
+                cidade: "São José dos Campos",
+                uf: "SP"
+            };
+
+            var botao = document.querySelector('button.botao');
+            botao.onclick = function(){
+                var mensagem = document.querySelector('input #mensagem');
+                mensagem = 'O usuário mora em ' 
+                            + endereco.cidade + ' / ' 
+                            + endereco.uf + ', no bairro ' 
+                            + endereco.bairro + ', na rua "' 
+                            + endereco.rua + '" com número '
+                            + endereco.numero + '.';
+                alert(mensagem);
+            };
+           
+            function pares(x,y){
+                var quantidade;
+                var contador;
+                var numeroPares = [];
+                var posicao;
+                
+                x = parseInt(x);
+                y = parseInt(y);
+
+                if(x > y){
+                    alert('Valor inicial é superior ao valor final. Tente novamente.');
+                    return;
+                };
+
+                quantidade = y - x;
+                posicao = 0;
+                for(contador = 0;contador <= quantidade; contador++){
+                    if(x % 2 == 0){
+                        numeroPares[posicao] = x;
+                        posicao = posicao + 1;
+                    }
+                    x += 1;
+                };
+
+                alert("Os numeros pares são: " + numeroPares);
+            };
+
+            var botaoPares = document.querySelector('button.pares');
+            botaoPares.onclick = function(){
+                var x = document.querySelector('#x');
+                var y = document.querySelector('#y');
+
+                pares(x.value,y.value);
+            };
+
+            var skills = ['html', 'css','java'];
+            var verificaHabilidade = document.querySelector('button.habilidade');
+            verificaHabilidade.onclick = function(){
+                var verificacao = false;
+
+                if(skills.indexOf('java') > 0){
+                    verificacao = true;
+                };
+
+                if (verificacao){
+                    alert('Tem habilidade');
+                } else {
+                    alert('Não tem habilidade');
+                };
+            };
+
+            var verificaExperiencia = document.querySelector('button.experiencia');
+            verificaExperiencia.onclick = function(){
+                var anosEstudo = document.querySelector('#anosEstudo');
+                var tempoEstudo = anosEstudo.value;
+
+                if (tempoEstudo >= 0 && tempoEstudo <= 1){
+                    alert('Iniciante');
+                } else if (tempoEstudo > 1 && tempoEstudo <= 3){
+                    alert('Intermediário');
+                } else if (tempoEstudo > 3 && tempoEstudo <= 6){
+                    alert('Avançado');
+                } else if (tempoEstudo >= 7) {
+                    alert('Jedi Master');
+                } else{
+                    alert('Tempo informado não identificado. Tente novamente.');
+                };
+            };
+
+            var usuarios = [{
+                nome: 'Messi',
+                habilidades: ['Driblador', 'Veloz', 'Goleador']
+            },{
+                nome: 'Marcelo',
+                habilidades: ['Pensador', 'Passe perfeito', 'Habilidoso', 'Muito bonito']
+            }];
+
+            var verificaHabilidades = document.querySelector('button.habilidades');
+            verificaHabilidades.onclick = function(){
+                var totalUsuarios = usuarios.length;
+                for(var contador = 0; contador<totalUsuarios; contador++){
+                    alert(usuarios[contador].nome + ' possui as habilidades: ' + usuarios[contador].habilidades.join());
+                };
+            };
+
+            function trocarCor(){
+                var elemento = document.querySelector('canvas');
+                var ctx = elemento.getContext('2d');            
+                ctx.fillStyle = "#FF8000";
+            };
+
+            var div = document.querySelector('#app');
+            var numeroDeCanvas = 0;
+            var criarElemento = document.querySelector('button.criarElemento');
+            criarElemento.onclick = function(){
+                
+                var elemento = document.createElement('canvas');
+                elemento.style.backgroundColor = '#FF0000';
+                elemento.id = 'canvasElemento'+numeroDeCanvas;
+
+                div.appendChild(elemento);
+
+                var posicaoElemento = '#canvasElemento'+numeroDeCanvas;
+                var elementoCanvas = document.querySelector(posicaoElemento);
+                elementoCanvas.onmouseover = function(){
+                    elementoCanvas.style.backgroundColor = '#ffff00';
+                };
+
+
+                numeroDeCanvas += 1;
+            };
+            
+            // Exercícios 3 e 4
+            var lista = document.createElement('ul');
+            lista.id = "lista";
+            div.appendChild(lista);
+
+            var nomes = ['Diego', 'Gabriel', 'Lucas'];
+            var qtdeNomes;
+            var contador;
+                       
+            qtdeNomes = nomes.length;
+            for(contador = 0; contador < qtdeNomes; contador++){
+                var itens = document.createElement('li');
+                itens.innerText = nomes[contador];
+                lista.appendChild(itens);
+            };
+
+            var adicionar = document.querySelector('button.adicionar');
+            adicionar.onclick = function(){ 
+                var novoNome = document.querySelector('#nomes');
+                var nome = novoNome.value;
+                var itens = document.createElement('li');
+                
+                if(nome != '' && nome != undefined){
+                    itens.innerText = nome;
+                    lista.appendChild(itens);
+                    novoNome.value = '';
+                };
+            };
+            
+        </script>
+    </body>
+</html>
